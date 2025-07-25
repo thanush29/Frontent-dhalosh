@@ -66,6 +66,10 @@ const UserProfile: React.FC = () => {
     return `${formattedDate} at ${formattedTime}`;
   };
 
+  // Debug: Check what's in the user object
+  console.log('User object:', user);
+  console.log('User created_at:', user?.created_at);
+
   if (!user) {
     return (
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -186,8 +190,8 @@ const UserProfile: React.FC = () => {
                   </div>
                   <div className="bg-green-50 p-4 rounded-lg">
                     <p className="text-sm text-green-600 font-medium">Member Since</p>
-                    <p className="text-lg font-semibold text-green-700" title={formatMemberSinceWithTime(user.joinedAt || user.createdAt)}>
-                      {formatMemberSince(user.joinedAt || user.createdAt)}
+                    <p className="text-lg font-semibold text-green-700" title={formatMemberSinceWithTime(user.created_at)}>
+                      {formatMemberSince(user.created_at)}
                     </p>
                   </div>
                 </div>
