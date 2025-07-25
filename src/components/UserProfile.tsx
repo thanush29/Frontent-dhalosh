@@ -188,12 +188,7 @@ const UserProfile: React.FC = () => {
                     <p className="text-sm text-orange-600 font-medium">Total Orders</p>
                     <p className="text-2xl font-bold text-orange-700">{user.orders?.length || 0}</p>
                   </div>
-                  <div className="bg-green-50 p-4 rounded-lg">
-                    <p className="text-sm text-green-600 font-medium">Member Since</p>
-                    <p className="text-lg font-semibold text-green-700" title={formatMemberSinceWithTime(user.created_at)}>
-                      {formatMemberSince(user.created_at)}
-                    </p>
-                  </div>
+                  
                 </div>
               </>
             )}
