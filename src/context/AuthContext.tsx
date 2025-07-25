@@ -38,7 +38,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         user,
         isAuthenticated: true,
         isLoading: false,
-        isAdmin: user.email === 'admin@dhaloesh.com',
+        isAdmin: user.email === 'thanushlokesh1@gmail.com',
       });
     } else {
       setAuthState(prev => ({ ...prev, isLoading: false }));
@@ -57,7 +57,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           user,
           isAuthenticated: true,
           isLoading: false,
-          isAdmin: user.email === 'admin@dhaloesh.com',
+          isAdmin: user.email === 'thanushlokesh1@gmail.com',
         });
         
         localStorage.setItem('user', JSON.stringify(user));
