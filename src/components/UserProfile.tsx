@@ -26,6 +26,46 @@ const UserProfile: React.FC = () => {
     setIsEditing(false);
   };
 
+  // Function to format the member since date
+  const formatMemberSince = (joinDate) => {
+    if (!joinDate) {
+      return 'N/A';
+    }
+    
+    const date = new Date(joinDate);
+    const options = { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric' 
+    };
+    
+    return date.toLocaleDateString('en-US', options);
+  };
+
+  // Function to format the member since date with time
+  const formatMemberSinceWithTime = (joinDate) => {
+    if (!joinDate) {
+      return 'N/A';
+    }
+    
+    const date = new Date(joinDate);
+    const dateOptions = { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric' 
+    };
+    const timeOptions = {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    };
+    
+    const formattedDate = date.toLocaleDateString('en-US', dateOptions);
+    const formattedTime = date.toLocaleTimeString('en-US', timeOptions);
+    
+    return `${formattedDate} at ${formattedTime}`;
+  };
+
   if (!user) {
     return (
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -146,7 +186,9 @@ const UserProfile: React.FC = () => {
                   </div>
                   <div className="bg-green-50 p-4 rounded-lg">
                     <p className="text-sm text-green-600 font-medium">Member Since</p>
-                    <p className="text-lg font-semibold text-green-700">2024</p>
+                    <p className="text-lg font-semibold text-green-700" title={formatMemberSinceWithTime(user.joinedAt || user.createdAt)}>
+                      {formatMemberSince(user.joinedAt || user.createdAt)}
+                    </p>
                   </div>
                 </div>
               </>
