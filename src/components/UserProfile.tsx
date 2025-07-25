@@ -180,7 +180,7 @@ const UserProfile: React.FC = () => {
           </div>
 
           <div className="border-t pt-6">
-            {user?.email !== 'admin@dhaloesh.com' && (
+            {user?.email !== 'thanushlokesh1@gmail.com' && (
               <>
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Account Statistics</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -197,7 +197,7 @@ const UserProfile: React.FC = () => {
                 </div>
               </>
             )}
-            {user?.email === 'admin@dhaloesh.com' && (
+            {user?.email === 'thanushlokesh1@gmail.com' && (
               <>
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Admin Information</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
