@@ -179,19 +179,7 @@ const UserProfile: React.FC = () => {
             </div>
           </div>
 
-          <div className="border-t pt-6">
-            {user?.email !== 'admin@dhaloesh.com' && (
-              <>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Account Statistics</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="bg-orange-50 p-4 rounded-lg">
-                    <p className="text-sm text-orange-600 font-medium">Total Orders</p>
-                    <p className="text-2xl font-bold text-orange-700">{user.orders?.length || 0}</p>
-                  </div>
-                  
-                </div>
-              </>
-            )}
+          
             {user?.email === 'admin@dhaloesh.com' && (
               <>
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Admin Information</h3>
