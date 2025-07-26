@@ -4,12 +4,12 @@ import { MenuItem } from '../types';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 
+// Individual MenuCard Component
 interface MenuCardProps {
   item: MenuItem;
-  showHeading?: boolean; // Optional prop to control heading display
 }
 
-const MenuCard: React.FC<MenuCardProps> = ({ item, showHeading = false }) => {
+const MenuCard: React.FC<MenuCardProps> = ({ item }) => {
   const { state, dispatch } = useCart();
   const { user } = useAuth();
   const [isFavorite, setIsFavorite] = React.useState(false);
@@ -32,81 +32,111 @@ const MenuCard: React.FC<MenuCardProps> = ({ item, showHeading = false }) => {
   };
 
   return (
-    <>
-      {showHeading && (
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Our Menu</h1>
-          <div className="w-24 h-1 bg-orange-600 mx-auto rounded-full"></div>
+    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-500 group enhanced-hover card-hover animate-zoom-in">
+      <div className="relative">
+        <img
+          src={item.image}
+          alt={item.name}
+          className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500 tilt"
+        />
+        <div className="absolute top-2 right-2 bg-orange-600 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg animate-bounce-custom hover-tada">
+          ₹{item.price}
         </div>
-      )}
+        {user && (
+          <button
+            onClick={toggleFavorite}
+            className={`absolute top-2 left-2 p-2 rounded-full transition-all duration-300 ${
+              isFavorite 
+                ? 'bg-red-500 text-white' 
+                : 'bg-white/80 text-gray-600 hover:bg-red-500 hover:text-white'
+            }`}
+          >
+            <Heart className={`h-4 w-4 ${isFavorite ? 'fill-current' : ''}`} />
+          </button>
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      </div>
       
-      <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-500 group enhanced-hover card-hover animate-zoom-in">
-        <div className="relative">
-          <img
-            src={item.image}
-            alt={item.name}
-            className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500 tilt"
-          />
-          <div className="absolute top-2 right-2 bg-orange-600 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg animate-bounce-custom hover-tada">
-            ₹{item.price}
-          </div>
-          {user && (
-            <button
-              onClick={toggleFavorite}
-              className={`absolute top-2 left-2 p-2 rounded-full transition-all duration-300 ${
-                isFavorite 
-                  ? 'bg-red-500 text-white' 
-                  : 'bg-white/80 text-gray-600 hover:bg-red-500 hover:text-white'
-              }`}
-            >
-              <Heart className={`h-4 w-4 ${isFavorite ? 'fill-current' : ''}`} />
-            </button>
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        </div>
+      <div className="p-4">
+        <h3 className="text-lg font-semibold text-gray-900 mb-2 hover-swing">{item.name}</h3>
+        <p className="text-sm text-gray-600 mb-4">{item.description}</p>
         
-        <div className="p-4">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2 hover-swing">{item.name}</h3>
-          <p className="text-sm text-gray-600 mb-4">{item.description}</p>
-          
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <span className="text-sm text-gray-500">Category:</span>
-              <span className="text-sm bg-orange-100 text-orange-800 px-2 py-1 rounded-full font-medium hover-pulse">{item.category}</span>
-            </div>
-            
-            {quantity === 0 ? (
-              <button
-                onClick={addToCart}
-                className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-all duration-300 flex items-center space-x-2 transform hover:scale-105 shadow-md hover:shadow-lg btn-animate liquid-btn hover-rubber-band"
-              >
-                <Plus className="h-4 w-4 hover:rotate-90 transition-transform duration-300" />
-                <span>Add</span>
-              </button>
-            ) : (
-              <div className="flex items-center space-x-3 bg-orange-50 px-3 py-2 rounded-lg border border-orange-200 enhanced-hover">
-                <button
-                  onClick={() => updateQuantity(quantity - 1)}
-                  className="text-orange-600 hover:text-orange-700 transition-all duration-200 p-1 hover:bg-orange-100 rounded transform hover:scale-110 hover-bounce"
-                >
-                  <Minus className="h-4 w-4" />
-                </button>
-                <span className="text-lg font-bold text-orange-600 min-w-[20px] text-center animate-pulse hover-tada">
-                  {quantity}
-                </span>
-                <button
-                  onClick={() => updateQuantity(quantity + 1)}
-                  className="text-orange-600 hover:text-orange-700 transition-all duration-200 p-1 hover:bg-orange-100 rounded transform hover:scale-110 hover-bounce"
-                >
-                  <Plus className="h-4 w-4" />
-                </button>
-              </div>
-            )}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <span className="text-sm text-gray-500">Category:</span>
+            <span className="text-sm bg-orange-100 text-orange-800 px-2 py-1 rounded-full font-medium hover-pulse">{item.category}</span>
           </div>
+          
+          {quantity === 0 ? (
+            <button
+              onClick={addToCart}
+              className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-all duration-300 flex items-center space-x-2 transform hover:scale-105 shadow-md hover:shadow-lg btn-animate liquid-btn hover-rubber-band"
+            >
+              <Plus className="h-4 w-4 hover:rotate-90 transition-transform duration-300" />
+              <span>Add</span>
+            </button>
+          ) : (
+            <div className="flex items-center space-x-3 bg-orange-50 px-3 py-2 rounded-lg border border-orange-200 enhanced-hover">
+              <button
+                onClick={() => updateQuantity(quantity - 1)}
+                className="text-orange-600 hover:text-orange-700 transition-all duration-200 p-1 hover:bg-orange-100 rounded transform hover:scale-110 hover-bounce"
+              >
+                <Minus className="h-4 w-4" />
+              </button>
+              <span className="text-lg font-bold text-orange-600 min-w-[20px] text-center animate-pulse hover-tada">
+                {quantity}
+              </span>
+              <button
+                onClick={() => updateQuantity(quantity + 1)}
+                className="text-orange-600 hover:text-orange-700 transition-all duration-200 p-1 hover:bg-orange-100 rounded transform hover:scale-110 hover-bounce"
+              >
+                <Plus className="h-4 w-4" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
+// Main Menu Component that includes heading and grid of cards
+interface MenuProps {
+  items: MenuItem[];
+  title?: string;
+}
+
+const Menu: React.FC<MenuProps> = ({ items, title = "Our Menu" }) => {
+  return (
+    <div className="container mx-auto px-4 py-8">
+      {/* Menu Heading */}
+      <div className="text-center mb-12">
+        <h1 className="text-5xl font-bold text-gray-900 mb-4 tracking-tight">
+          {title}
+        </h1>
+        <div className="w-24 h-1 bg-orange-600 mx-auto rounded-full mb-2"></div>
+        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          Discover our delicious selection of carefully crafted dishes made with the finest ingredients
+        </p>
+      </div>
+
+      {/* Menu Cards Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {items.map((item) => (
+          <MenuCard key={item.id} item={item} />
+        ))}
+      </div>
+
+      {/* Empty State */}
+      {items.length === 0 && (
+        <div className="text-center py-12">
+          <p className="text-gray-500 text-lg">No menu items available at the moment.</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Export both components
 export default MenuCard;
+export { Menu };
