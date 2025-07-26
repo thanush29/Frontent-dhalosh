@@ -179,7 +179,8 @@ const UserProfile: React.FC = () => {
             </div>
           </div>
 
-          
+          <div className="border-t pt-6">
+            
             {user?.email === 'admin@dhaloesh.com' && (
               <>
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Admin Information</h3>
